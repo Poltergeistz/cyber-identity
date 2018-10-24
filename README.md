@@ -5,7 +5,7 @@ A serious game about hacking culture &amp; datas to raise public awareness about
 
 ## The game
 
-You lost your memory, all you've got is a strange message from an uknown number, attached to the message there is a picture.
+You lost your memory, all you've got is a strange message from an unknown number, attached to the message there is a picture.
 Based on the photo you've got, retrive your identity.
 
 ## Dev
