@@ -6,13 +6,16 @@ A serious game about hacking culture &amp; datas to raise public awareness about
 ## The game
 
 You lost your memory, all you've got is a strange message from an unknown number, attached to the message there is a picture.
-Based on the photo you've got, retrive your identity.
+Based on the photo you've got, retrieve your identity.
 
 ## Dev
 For now it's just a prototype but the goal is a develop a chatbot. 
 
 ## Theme
 Hacking, cybersecurity, big data, IA.
+
+## Documentation 
+You can check the wiki for more information.
 
 ## Contribute
 
