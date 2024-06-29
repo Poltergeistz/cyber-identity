@@ -126,20 +126,6 @@
     </div>
 
     <script>
-      // Game state
-      let gameState = {
-        clues: 0,
-        identity: 'CyberSleuth2024',
-        message:
-          '01010100 01101000 01100101 00100000 01101011 01100101 01111001 00100000 01110100 01101111 00100000 01111001 01101111 01110101 01110010 00100000 01110000 01100001 01110011 01110100 00100000 01101100 01101001 01100101 01110011 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01110011 01101000 01100001 01100100 01101111 01110111 01110011 00101110',
-        imageClues: [
-          'Analysis complete: QR code fragment detected in sector A7.',
-          'Enhancing image: Reflected screen contents partially visible.',
-          "Metadata extraction: File name contains string 'CyberSl'.",
-        ],
-        portScanComplete: false,
-        steganographyRevealed: false,
-      };
       // DOM elements
       const startButton = document.getElementById('startGame');
       const gameDiv = document.getElementById('game');
@@ -213,12 +199,63 @@
       submitGuess.addEventListener('click', checkIdentity);
       asciiImage.addEventListener('click', revealSteganography);
 
+      let gameState;
+
+      function initializeGameState() {
+        gameState = {
+          clues: 0,
+          identity: '',
+          message: '',
+          imageClues: [
+            'Analysis complete: QR code fragment detected in sector A7.',
+            'Enhancing image: Reflected screen contents partially visible.',
+            "Metadata extraction: File name contains string ''",
+          ],
+          portScanComplete: false,
+          steganographyRevealed: false,
+        };
+        generateGameState();
+      }
+
+      function resetGame() {
+        // Reset UI elements
+        identityForm.classList.add('hidden');
+        identityGuess.value = '';
+        terminal.textContent = '';
+        educationalContent.classList.add('hidden');
+        conceptsList.textContent = '';
+        resourcesList.textContent = '';
+
+        gameState.clues = 0;
+        gameState.steganographyRevealed = false;
+        gameState.portScanComplete = false;
+        
+        messageContent.textContent = gameState.message;
+        asciiImage.textContent = asciiArt;
+        addToTerminal('System reinitialized. Awaiting further instructions.');
+      }
+
       function startGame() {
         document.getElementById('intro').classList.add('hidden');
         gameDiv.classList.remove('hidden');
+        initializeGameState();
         messageContent.textContent = gameState.message;
         asciiImage.textContent = asciiArt;
         addToTerminal('System initialized. Awaiting further instructions.');
+      }
+
+      function generateGameState() {
+        const roles = ['Agent', 'Hunter', 'Sleuth', 'Guardian', 'Sentinel'];
+        const role = roles[Math.floor(Math.random() * roles.length)];
+        const year = new Date().getFullYear();
+        gameState.identity = `Cyber${role}${year}`;
+        gameState.message = btoa(
+          `The key to your past lies in the shadows. Remember: Cyber${role}${year}`
+        );
+        gameState.imageClues[2] = `Metadata extraction: File name contains string 'Cyber${role.slice(
+          0,
+          2
+        )}'`;
       }
 
       function analyzeImage() {
@@ -239,7 +276,7 @@
             'Decryption complete: The key to your past lies in the shadows.'
           );
           addToTerminal(
-            "Additional data: Username format - 'XXXX####' where X is alpha, # is numeric"
+            "Additional data: Username format - 'XXXXRole####' where X is 'Cyber', Role is a cybersecurity role, # is the current year"
           );
           checkProgress();
         }, 2000);
