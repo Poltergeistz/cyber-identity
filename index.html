@@ -59,6 +59,12 @@
         cursor: pointer;
       }
 
+      #educationalContent {
+        margin-top: 1.25rem;
+        padding: 0.625rem;
+        border: 0.0625rem dashed #00ff00;
+      }
+
       #messageContent {
         word-break: break-all;
         overflow-wrap: break-word;
@@ -109,6 +115,13 @@
           <input type="text" id="identityGuess" placeholder="Enter identity" />
           <button id="submitGuess">SUBMIT</button>
         </div>
+
+        <div id="educationalContent" class="hidden">
+          <h2>Cybersecurity Concepts Covered</h2>
+          <ul id="conceptsList"></ul>
+          <h2>Useful Resources</h2>
+          <ul id="resourcesList"></ul>
+        </div>
       </div>
     </div>
 
@@ -139,6 +152,9 @@
       const identityForm = document.getElementById('identityForm');
       const identityGuess = document.getElementById('identityGuess');
       const submitGuess = document.getElementById('submitGuess');
+      const educationalContent = document.getElementById('educationalContent');
+      const conceptsList = document.getElementById('conceptsList');
+      const resourcesList = document.getElementById('resourcesList');
 
       // ASCII art "image" with hidden message
       const asciiArt = `
@@ -157,6 +173,37 @@
         ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░
         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
         `;
+
+      // Cybersecurity concepts and resources
+      const concepts = [
+        'Steganography: The practice of concealing messages or information within other non-secret text or data.',
+        'Cryptography: The practice and study of techniques for secure communication in the presence of adversaries.',
+        'Network Security: The practice of protecting a computer network from intruders, attacks and unauthorized access.',
+        'Digital Forensics: The recovery and investigation of material found in digital devices.',
+      ];
+
+      const resources = [
+        {
+          name: 'Learn web security - Hacksplaning',
+          url: 'https://www.hacksplaining.com/',
+        },
+        {
+          name: 'Learn to hack while playing - Overthewire',
+          url: 'https://overthewire.org/wargames/',
+        },
+        {
+          name: 'Crypto101 - Introductory Course on Cryptography',
+          url: 'https://www.crypto101.io/',
+        },
+        {
+          name: 'Port Knocking: A Practical Introduction',
+          url: 'https://null-byte.wonderhowto.com/how-to/use-port-knocking-hide-your-services-from-attackers-0161264/',
+        },
+        {
+          name: 'OWASP (Open Web Application Security Project)',
+          url: 'https://owasp.org/',
+        },
+      ];
 
       // Event listeners
       startButton.addEventListener('click', startGame);
@@ -259,6 +306,7 @@
             `Identity confirmed. Welcome back, ${gameState.identity}.`
           );
           addToTerminal('System access granted. Mission accomplished.');
+          showEducationalContent();
         } else {
           addToTerminal(
             'Identity mismatch. Access denied. Retry sequence initiated.'
@@ -273,6 +321,24 @@
           checkIdentity();
         }
       });
+
+      function showEducationalContent() {
+        educationalContent.classList.remove('hidden');
+        concepts.forEach((concept) => {
+          const li = document.createElement('li');
+          li.textContent = concept;
+          conceptsList.appendChild(li);
+        });
+        resources.forEach((resource) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = resource.url;
+          a.textContent = resource.name;
+          a.target = '_blank';
+          li.appendChild(a);
+          resourcesList.appendChild(li);
+        });
+      }
     </script>
   </body>
 </html>
