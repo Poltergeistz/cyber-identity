@@ -1,121 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cybersecurity Identity Mystery</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', monospace;
-            background-color: #000;
-            color: #00FF00;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #00FF00;
-        }
-        h1, h2 {
-            color: #00FF00;
-        }
-        input, button {
-            background-color: #000;
-            color: #00FF00;
-            border: 1px solid #00FF00;
-            padding: 5px 10px;
-            margin: 5px 0;
-        }
-        button:hover {
-            background-color: #003300;
-        }
-        #terminal {
-            height: 300px;
-            overflow-y: auto;
-            border: 1px solid #00FF00;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        .hidden {
-            display: none;
-        }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Courier New', monospace;
+        background-color: #000;
+        color: #00ff00;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 50rem;
+        margin: 1.25rem auto;
+        padding: 1.25rem;
+        border: 0.0625rem solid #00ff00;
+      }
+
+      h1,
+      h2 {
+        color: #00ff00;
+      }
+
+      input,
+      button {
+        background-color: #000;
+        color: #00ff00;
+        border: 0.0625rem solid #00ff00;
+        padding: 0.3125rem 0.625rem;
+        margin: 0.3125rem 0;
+      }
+
+      button:hover {
+        background-color: #003300;
+      }
+
+      #terminal {
+        height: 18.75rem;
+        overflow-y: auto;
+        border: 0.0625rem solid #00ff00;
+        padding: 0.625rem;
+        margin-top: 1.25rem;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #asciiImage {
+        font-size: 0.75em;
+        line-height: 0.75em;
+        letter-spacing: 0.065em;
+        cursor: pointer;
+      }
+
+      #messageContent {
+        word-break: break-all;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      @media (max-width: 37.5em) {
         #asciiImage {
-            font-size: 4px;
-            line-height: 4px;
-            letter-spacing: 1px;
-            cursor: pointer;
+          font-size: 0.375em;
+          line-height: 0.375em;
         }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Cybersecurity Identity Mystery</h1>
-        
-        <div id="intro">
-            <p>System boot sequence initiated. Amnesia protocol detected. Initiating memory recovery...</p>
-            <button id="startGame">BEGIN SEQUENCE</button>
+      <h1>Cybersecurity Identity Mystery</h1>
+
+      <div id="intro">
+        <p>
+          System boot sequence initiated. Amnesia protocol detected. Initiating
+          memory recovery...
+        </p>
+        <button id="startGame">BEGIN SEQUENCE</button>
+      </div>
+
+      <div id="game" class="hidden">
+        <div id="message">
+          <h2>Encrypted Message:</h2>
+          <p id="messageContent"></p>
         </div>
-        
-        <div id="game" class="hidden">
-            <div id="message">
-                <h2>Encrypted Message:</h2>
-                <p id="messageContent"></p>
-            </div>
-            
-            <div id="image">
-                <h2>Mysterious Image:</h2>
-                <pre id="asciiImage"></pre>
-            </div>
-            
-            <div id="actions">
-                <button id="analyzeImage">ANALYZE IMAGE</button>
-                <button id="decryptMessage">DECRYPT MESSAGE</button>
-                <button id="scanPorts">SCAN NETWORK PORTS</button>
-            </div>
-            
-            <div id="terminal"></div>
-            
-            <div id="identityForm" class="hidden">
-                <h2>EXECUTE IDENTITY RECOVERY</h2>
-                <input type="text" id="identityGuess" placeholder="Enter identity">
-                <button id="submitGuess">SUBMIT</button>
-            </div>
+
+        <div id="image">
+          <h2>Mysterious Image:</h2>
+          <pre id="asciiImage"></pre>
         </div>
+
+        <div id="actions">
+          <button id="analyzeImage">ANALYZE IMAGE</button>
+          <button id="decryptMessage">DECRYPT MESSAGE</button>
+          <button id="scanPorts">SCAN NETWORK PORTS</button>
+        </div>
+
+        <div id="terminal"></div>
+
+        <div id="identityForm" class="hidden">
+          <h2>EXECUTE IDENTITY RECOVERY</h2>
+          <input type="text" id="identityGuess" placeholder="Enter identity" />
+          <button id="submitGuess">SUBMIT</button>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Game state
-        let gameState = {
-            clues: 0,
-            identity: "CyberSleuth2024",
-            message: "01010100 01101000 01100101 00100000 01101011 01100101 01111001 00100000 01110100 01101111 00100000 01111001 01101111 01110101 01110010 00100000 01110000 01100001 01110011 01110100 00100000 01101100 01101001 01100101 01110011 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01110011 01101000 01100001 01100100 01101111 01110111 01110011 00101110",
-            imageClues: [
-                "Analysis complete: QR code fragment detected in sector A7.",
-                "Enhancing image: Reflected screen contents partially visible.",
-                "Metadata extraction: File name contains string 'CyberSl'."
-            ],
-            portScanComplete: false,
-            steganographyRevealed: false
-        };
+      // Game state
+      let gameState = {
+        clues: 0,
+        identity: 'CyberSleuth2024',
+        message:
+          '01010100 01101000 01100101 00100000 01101011 01100101 01111001 00100000 01110100 01101111 00100000 01111001 01101111 01110101 01110010 00100000 01110000 01100001 01110011 01110100 00100000 01101100 01101001 01100101 01110011 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01110011 01101000 01100001 01100100 01101111 01110111 01110011 00101110',
+        imageClues: [
+          'Analysis complete: QR code fragment detected in sector A7.',
+          'Enhancing image: Reflected screen contents partially visible.',
+          "Metadata extraction: File name contains string 'CyberSl'.",
+        ],
+        portScanComplete: false,
+        steganographyRevealed: false,
+      };
+      // DOM elements
+      const startButton = document.getElementById('startGame');
+      const gameDiv = document.getElementById('game');
+      const messageContent = document.getElementById('messageContent');
+      const asciiImage = document.getElementById('asciiImage');
+      const analyzeImageButton = document.getElementById('analyzeImage');
+      const decryptMessageButton = document.getElementById('decryptMessage');
+      const scanPortsButton = document.getElementById('scanPorts');
+      const terminal = document.getElementById('terminal');
+      const identityForm = document.getElementById('identityForm');
+      const identityGuess = document.getElementById('identityGuess');
+      const submitGuess = document.getElementById('submitGuess');
 
-        // DOM elements
-        const startButton = document.getElementById('startGame');
-        const gameDiv = document.getElementById('game');
-        const messageContent = document.getElementById('messageContent');
-        const asciiImage = document.getElementById('asciiImage');
-        const analyzeImageButton = document.getElementById('analyzeImage');
-        const decryptMessageButton = document.getElementById('decryptMessage');
-        const scanPortsButton = document.getElementById('scanPorts');
-        const terminal = document.getElementById('terminal');
-        const identityForm = document.getElementById('identityForm');
-        const identityGuess = document.getElementById('identityGuess');
-        const submitGuess = document.getElementById('submitGuess');
-
-        // ASCII art "image" with hidden message
-        const asciiArt = `
+      // ASCII art "image" with hidden message
+      const asciiArt = `
         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
         ░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░
         ░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░
@@ -132,92 +158,121 @@
         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
         `;
 
-        // Event listeners
-        startButton.addEventListener('click', startGame);
-        analyzeImageButton.addEventListener('click', analyzeImage);
-        decryptMessageButton.addEventListener('click', decryptMessage);
-        scanPortsButton.addEventListener('click', scanPorts);
-        submitGuess.addEventListener('click', checkIdentity);
-        asciiImage.addEventListener('click', revealSteganography);
+      // Event listeners
+      startButton.addEventListener('click', startGame);
+      analyzeImageButton.addEventListener('click', analyzeImage);
+      decryptMessageButton.addEventListener('click', decryptMessage);
+      scanPortsButton.addEventListener('click', scanPorts);
+      submitGuess.addEventListener('click', checkIdentity);
+      asciiImage.addEventListener('click', revealSteganography);
 
-        function startGame() {
-            document.getElementById('intro').classList.add('hidden');
-            gameDiv.classList.remove('hidden');
-            messageContent.textContent = gameState.message;
-            asciiImage.textContent = asciiArt;
-            addToTerminal("System initialized. Awaiting further instructions.");
-        }
+      function startGame() {
+        document.getElementById('intro').classList.add('hidden');
+        gameDiv.classList.remove('hidden');
+        messageContent.textContent = gameState.message;
+        asciiImage.textContent = asciiArt;
+        addToTerminal('System initialized. Awaiting further instructions.');
+      }
 
-        function analyzeImage() {
-            if (gameState.clues >= gameState.imageClues.length) {
-                addToTerminal("Error: No new data found in image analysis.");
-                return;
-            }
-            const clue = gameState.imageClues[gameState.clues];
-            addToTerminal(clue);
-            gameState.clues++;
-            checkProgress();
+      function analyzeImage() {
+        if (gameState.clues >= gameState.imageClues.length) {
+          addToTerminal('Error: No new data found in image analysis.');
+          return;
         }
+        const clue = gameState.imageClues[gameState.clues];
+        addToTerminal(clue);
+        gameState.clues++;
+        checkProgress();
+      }
 
-        function decryptMessage() {
-            addToTerminal("Initiating decryption sequence...");
-            setTimeout(() => {
-                addToTerminal("Decryption complete: The key to your past lies in the shadows.");
-                addToTerminal("Additional data: Username format - 'XXXX####' where X is alpha, # is numeric");
-                checkProgress();
-            }, 2000);
-        }
+      function decryptMessage() {
+        addToTerminal('Initiating decryption sequence...');
+        setTimeout(() => {
+          addToTerminal(
+            'Decryption complete: The key to your past lies in the shadows.'
+          );
+          addToTerminal(
+            "Additional data: Username format - 'XXXX####' where X is alpha, # is numeric"
+          );
+          checkProgress();
+        }, 2000);
+      }
 
-        function scanPorts() {
-            if (gameState.portScanComplete) {
-                addToTerminal("Port scan already completed. No new information available.");
-                return;
-            }
-            addToTerminal("Initiating network port scan...");
-            setTimeout(() => {
-                addToTerminal("Port scan complete. Open ports: 22 (SSH), 80 (HTTP), 443 (HTTPS)");
-                addToTerminal("Unusual port detected: 1337. Purpose unknown.");
-                gameState.portScanComplete = true;
-                checkProgress();
-            }, 3000);
+      function scanPorts() {
+        if (gameState.portScanComplete) {
+          addToTerminal(
+            'Port scan already completed. No new information available.'
+          );
+          return;
         }
+        addToTerminal('Initiating network port scan...');
+        setTimeout(() => {
+          addToTerminal(
+            'Port scan complete. Open ports: 22 (SSH), 80 (HTTP), 443 (HTTPS)'
+          );
+          addToTerminal('Unusual port detected: 1337. Purpose unknown.');
+          gameState.portScanComplete = true;
+          checkProgress();
+        }, 3000);
+      }
 
-        function revealSteganography() {
-            if (gameState.steganographyRevealed) {
-                addToTerminal("Steganographic analysis already performed.");
-                return;
-            }
-            addToTerminal("Analyzing image for hidden data...");
-            setTimeout(() => {
-                addToTerminal("Hidden message found: 'The shadows conceal port 1337'");
-                gameState.steganographyRevealed = true;
-                checkProgress();
-            }, 2000);
+      function revealSteganography() {
+        if (gameState.steganographyRevealed) {
+          addToTerminal('Steganographic analysis already performed.');
+          return;
         }
+        addToTerminal('Analyzing image for hidden data...');
+        setTimeout(() => {
+          addToTerminal(
+            "Hidden message found: 'The shadows conceal port 1337'"
+          );
+          gameState.steganographyRevealed = true;
+          checkProgress();
+        }, 2000);
+      }
 
-        function addToTerminal(text) {
-            const p = document.createElement('p');
-            p.textContent = `> ${text}`;
-            terminal.appendChild(p);
-            terminal.scrollTop = terminal.scrollHeight;
-        }
+      function addToTerminal(text) {
+        const p = document.createElement('p');
+        p.textContent = `> ${text}`;
+        terminal.appendChild(p);
+        terminal.scrollTop = terminal.scrollHeight;
+      }
 
-        function checkProgress() {
-            if (gameState.clues >= 3 && gameState.portScanComplete && gameState.steganographyRevealed) {
-                identityForm.classList.remove('hidden');
-                addToTerminal("All data analyzed. Identity recovery possible. Enter your hypothesis.");
-            }
+      function checkProgress() {
+        if (
+          gameState.clues >= 3 &&
+          gameState.portScanComplete &&
+          gameState.steganographyRevealed
+        ) {
+          identityForm.classList.remove('hidden');
+          addToTerminal(
+            'All data analyzed. Identity recovery possible. Enter your hypothesis.'
+          );
+          identityGuess.focus();
         }
+      }
 
-        function checkIdentity() {
-            const guess = identityGuess.value.trim();
-            if (guess.toLowerCase() === gameState.identity.toLowerCase()) {
-                addToTerminal("Identity confirmed. Welcome back, " + gameState.identity + ".");
-                addToTerminal("System access granted. Mission accomplished.");
-            } else {
-                addToTerminal("Identity mismatch. Access denied. Retry sequence initiated.");
-            }
+      function checkIdentity() {
+        const guess = identityGuess.value.trim();
+        if (guess.toLowerCase() === gameState.identity.toLowerCase()) {
+          addToTerminal(
+            `Identity confirmed. Welcome back, ${gameState.identity}.`
+          );
+          addToTerminal('System access granted. Mission accomplished.');
+        } else {
+          addToTerminal(
+            'Identity mismatch. Access denied. Retry sequence initiated.'
+          );
+          resetGame();
         }
+        identityGuess.value = '';
+      }
+
+      identityGuess.addEventListener('keyup', function (event) {
+        if (event.key === 'Enter') {
+          checkIdentity();
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
